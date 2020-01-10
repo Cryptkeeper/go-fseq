@@ -37,8 +37,12 @@ func TestUint24(t *testing.T) {
 		buf.Reset()
 	}
 
-	// Ensure out of bounds values return error
-	if err := binary.Write(&bytes.Buffer{}, binary.LittleEndian, MaxUint24+1); err == nil {
-		t.Fatalf("expected err on out of bounds marshal")
-	}
+	// Ensure out of bounds values panic
+	defer func() {
+		if r := recover(); r == nil {
+			t.Fatalf("out of bounds value did not panic")
+		}
+	}()
+
+	NewUint24(MaxUint24 + 1)
 }
