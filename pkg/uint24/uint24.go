@@ -1,35 +1,35 @@
 package uint24
 
 import (
-	"encoding/binary"
-	"errors"
 	"strconv"
 )
 
 const MaxUint24 = 1<<24 - 1
 
-var errTooLarge = errors.New("cannot marshal/unmarshal Uint24 larger than MaxUint24")
-
-type Uint24 uint32
-
-func (u Uint24) MarshalBinary() (data []byte, err error) {
-	if u > MaxUint24 {
-		return nil, errTooLarge
-	}
-	var b [4]byte
-	binary.LittleEndian.PutUint32(b[:], uint32(u))
-	return b[:3], nil
+func NewUint24(val uint32) *Uint24 {
+	var u = new(Uint24)
+	u.Set(val)
+	return u
 }
 
-func (u *Uint24) UnmarshalBinary(data []byte) error {
-	if *u > MaxUint24 {
-		return errTooLarge
+type Uint24 struct {
+	B [3]uint8
+}
+
+func (u *Uint24) Set(val uint32) {
+	// panic since this is closer to how a compiler/runtime would treat an overflow compared to err returns
+	if val > MaxUint24 {
+		panic("cannot set Uint24 larger than uint24.MaxUint24")
 	}
-	val := binary.LittleEndian.Uint32(data)
-	*u = Uint24(val)
-	return nil
+	u.B[0] = uint8(val & 0xFF)
+	u.B[1] = uint8((val >> 8) & 0xFF)
+	u.B[2] = uint8((val >> 16) & 0xFF)
+}
+
+func (u Uint24) Uint32() uint32 {
+	return uint32(u.B[0]) | uint32(u.B[1])<<8 | uint32(u.B[2])<<16
 }
 
 func (u Uint24) String() string {
-	return strconv.Itoa(int(u))
+	return strconv.Itoa(int(u.Uint32()))
 }
