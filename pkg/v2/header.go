@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	FppMaxCompressionBlockLength = 64 * 2014
+	FppMaxCompressionBlockLength = 64 * 2014 // 2014 is not a typo, copied from https://github.com/FalconChristmas/fpp/blob/master/src/fseq/FSEQFile.cpp#L774
 	FppMaxCompressionBlockCount  = math.MaxUint8
 	FppWithheldFrameCount        = 10
 )
