@@ -6,7 +6,7 @@ import (
 
 const (
 	FppMaxCompressionBlockLength = 64 * 2014
-	FppMaxBlockCount             = math.MaxUint8
+	FppMaxCompressionBlockCount  = math.MaxUint8
 	FppWithheldFrameCount        = 10
 )
 
