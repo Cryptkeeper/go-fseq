@@ -13,7 +13,7 @@ func ReadVersion(b []byte) (minorVersion, majorVersion uint8) {
 }
 
 var ValidIdentifiers = [][]uint8{
-	[]uint8("PESQ"),
+	[]uint8("PSEQ"),
 	[]uint8("FSEQ"),
 }
 
