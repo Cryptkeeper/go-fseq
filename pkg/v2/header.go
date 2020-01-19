@@ -33,6 +33,10 @@ func (h Header) Duration() time.Duration {
 	return framesPerSecond * time.Duration(h.FrameCount)
 }
 
+func (h Header) FramesPerSecond() int {
+	return 1000 / int(h.StepTimeMilliseconds)
+}
+
 func (h Header) ComputeMaxBlocks(maxBlockLength, maxBlockCount, withheldFrameCount int) (blockCount, withheldFrameLength, framesPerBlock int) {
 	withheldFrameLength = int(h.ChannelCount) * withheldFrameCount
 
