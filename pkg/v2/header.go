@@ -2,6 +2,7 @@ package v2
 
 import (
 	"math"
+	"time"
 )
 
 const (
@@ -25,6 +26,11 @@ type Header struct {
 	SparseRangeCount       uint8
 	Flags2                 uint8 `fppignored:"true" fppdefault:"0"`
 	UniqueID               uint64
+}
+
+func (h Header) Duration() time.Duration {
+	var framesPerSecond = time.Duration(h.StepTimeMilliseconds) * time.Millisecond
+	return framesPerSecond * time.Duration(h.FrameCount)
 }
 
 func (h Header) ComputeMaxBlocks(maxBlockLength, maxBlockCount, withheldFrameCount int) (blockCount, withheldFrameLength, framesPerBlock int) {
