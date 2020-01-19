@@ -1,6 +1,11 @@
 package v2
 
-var Identifier = []byte("PESQ")
+var Identifier = []uint8("PESQ")
+
+var ValidIdentifiers = [][]uint8{
+	[]uint8("PESQ"),
+	[]uint8("FSEQ"),
+}
 
 const (
 	HeaderLength = 32

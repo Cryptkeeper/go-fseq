@@ -1,6 +1,7 @@
 package v2
 
 import (
+	"bytes"
 	"math"
 )
 
@@ -25,6 +26,15 @@ type Header struct {
 	SparseRangeCount       uint8
 	Flags2                 uint8 `fppignored:"true" fppdefault:"0"`
 	UniqueID               uint64
+}
+
+func (h Header) ValidIdentifier() bool {
+	for _, v := range ValidIdentifiers {
+		if bytes.Equal(h.Identifier[:], v) {
+			return true
+		}
+	}
+	return false
 }
 
 func (h Header) ComputeMaxBlocks(maxBlockLength, maxBlockCount, withheldFrameCount int) (blockCount, withheldFrameLength, framesPerBlock int) {
