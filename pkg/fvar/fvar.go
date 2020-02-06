@@ -25,6 +25,10 @@ func (v Var) CodeString() string {
 }
 
 func (v Var) DataString() string {
+	// Omit the last byte if the string is null terminated
+	if v.Data[len(v.Data)-1] == 0x00 {
+		return string(v.Data[:len(v.Data)-1])
+	}
 	return string(v.Data)
 }
 
